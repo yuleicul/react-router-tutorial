@@ -1,22 +1,56 @@
-.ch-scrollycoding-with-preview .ch-scrollycoding-sticker {
-  flex: 1 1;
-  max-height: unset;
-  height: 100vh;
-  top: 0;
-}
-
-.ch-scrollycoding-with-preview .ch-scrollycoding-preview {
-  /* height: 400px; */
-}
-
-.ch-preview .ch-frame-title-bar {
-  display: none;
+.ch-scrollycoding {
+  flex-direction: row-reverse;
 }
 
 .ch-scrollycoding-sticker {
-  height: 100vh;
+  flex: 1 1;
+  max-height: unset;
+  height: 95vh;
+  top: 2.5vh;
+}
+
+.ch-scrollycoding-sticker .ch-codeblock,
+.ch-scrollycoding-sticker .ch-codegroup {
+  max-height: unset;
+  height: 95vh;
 }
 
 img.tutorial {
   width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  border-color: inherit;
+  border-spacing: 0;
+  display: block;
+  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
+  max-width: 100%;
+  overflow: auto;
+  text-align: left;
+  text-indent: 0;
+  width: 100%;
+}
+
+table th {
+  background-color: transparent;
+  --border-color: rgb(200 200 200);
+  --border-width: 2px;
+  border-bottom: var(--border-width) solid
+    var(--border-color);
+  font-weight: 600;
+  padding: 0 1rem 0.25rem 0;
+  position: sticky;
+  top: 0;
+}
+
+table td {
+  background-color: transparent;
+  --border-color: rgb(227 227 227);
+  --border-width: 1px;
+  border-bottom: var(--border-width) solid
+    var(--border-color);
+  padding: 0.5rem 1rem 0.5rem 0;
+  white-space: nowrap;
 }

@@ -1,4 +1,3 @@
-// focus(19,40:43)
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import {
@@ -14,10 +13,8 @@ import ErrorPage from './error-page'
 import Contact, {
   loader as contactLoader,
 } from './routes/contact'
-import EditContact, {
-  action as editAction,
-} from './routes/edit'
-import { action as destroyAction } from './routes/destroy'
+// focus
+import EditContact from './routes/edit'
 
 const router = createBrowserRouter([
   {
@@ -32,15 +29,11 @@ const router = createBrowserRouter([
         element: <Contact />,
         loader: contactLoader,
       },
+      // focus(1:5)
       {
         path: 'contacts/:contactId/edit',
         element: <EditContact />,
         loader: contactLoader,
-        action: editAction,
-      },
-      {
-        path: 'contacts/:contactId/destroy',
-        action: destroyAction,
       },
     ],
   },
