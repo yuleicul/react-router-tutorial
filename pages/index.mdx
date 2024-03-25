@@ -545,7 +545,7 @@ Let's dig in a bit...
 
 Open up `src/routes/edit.jsx` and look at the form elements. Notice how they each have a name:
 
-```jsx lines=[5] filename=src/routes/edit.jsx
+```jsx src/routes/edit.jsx focus=5
 <input
   placeholder="First"
   aria-label="First name"
@@ -580,7 +580,7 @@ Aside from `action`, none of these APIs we're discussing are provided by React R
 
 After we finished the action, note the [`redirect`][redirect] at the end:
 
-```jsx filename=src/routes/edit.jsx lines=[5]
+```jsx src/routes/edit.jsx focus=5
 export async function action({ request, params }) {
   const formData = await request.formData()
   const updates = Object.fromEntries(formData)
@@ -686,7 +686,7 @@ At this point you should know everything you need to know to make the delete but
 ---
 
 ```jsx src/routes/destroy.jsx
-// from ../src/routes/destroy.jsx
+// from ../src/routes/destroy.01.jsx
 ```
 
 👉 **Create the "destroy" route module**
@@ -721,14 +721,10 @@ Add a form, add an action, React Router does the rest.
 
 ## Contextual Errors
 
-Just for kicks, throw an error in the destroy action:
+👉 Just for kicks, throw an error in the destroy action
 
-```jsx filename=src/routes/destroy.jsx lines=[2]
-export async function action({ params }) {
-  throw new Error('oh dang!')
-  await deleteContact(params.contactId)
-  return redirect('/')
-}
+```jsx src/routes/destroy.jsx
+// from ../src/routes/destroy.02.jsx
 ```
 
 <img
@@ -739,17 +735,12 @@ export async function action({ params }) {
 
 Recognize that screen? It's our [`errorElement`][errorelement] from before. The user, however, can't really do anything to recover from this screen except to hit refresh.
 
-Let's create a contextual error message for the destroy route:
+---
 
-```jsx filename=src/main.jsx lines=[6]
-;[
-  /* other routes */
-  {
-    path: 'contacts/:contactId/destroy',
-    action: destroyAction,
-    errorElement: <div>Oops! There was an error.</div>,
-  },
-]
+👉 Let's create a contextual error message for the destroy route
+
+```jsx src/main.jsx
+// from ../src/main.12.jsx
 ```
 
 Now try it again:
@@ -762,7 +753,23 @@ Now try it again:
 
 Our user now has more options than slamming refresh, they can continue to interact with the parts of the page that aren't having trouble 🙌
 
-Because the destroy route has its own `errorElement` and is a child of the root route, the error will render there instead of the root. As you probably noticed, these errors bubble up to the nearest `errorElement`. Add as many or as few as you like, as long as you've got one at the root.
+Because the destroy route has its own _`errorElement`_ and is a child of the root route, the error will render there instead of the root. As you probably noticed, these errors bubble up to the nearest _`errorElement`_. Add as many or as few as you like, as long as you've got one at the root.
+
+👉 Remember to remove the error we added for kicks
+
+```jsx src/routes/destroy.jsx
+import { redirect } from 'react-router-dom'
+import { deleteContact } from '../contacts'
+
+export async function action({ params }) {
+  // focus
+  throw new Error('oh dang!') // remove this line
+  await deleteContact(params.contactId)
+  return redirect('/')
+}
+```
+
+---
 
 ## Index Routes
 
@@ -774,53 +781,22 @@ When we load up the app, you'll notice a big blank page on the right side of our
   src="https://reactrouter.com/_docs/tutorial/19.webp"
 />
 
-When a route has children, and you're at the parent route's path, the `<Outlet>` has nothing to render because no children match. You can think of index routes as the default child route to fill in that space.
+When a route has children, and you're at the parent route's path, the _`<Outlet>`_ has nothing to render because no children match. You can think of index routes as the default child route to fill in that space.
 
-👉 **Create the index route module**
-
-```
-touch src/routes/index.jsx
-```
-
-👉 **Fill in the index component's elements**
+👉 **Create the index route module, and fill in the index component's elements**
 
 Feel free to copy paste, nothing special here.
 
-```jsx filename=src/routes/index.jsx
-export default function Index() {
-  return (
-    <p id="zero-state">
-      This is a demo for React Router.
-      <br />
-      Check out{' '}
-      <a href="https://reactrouter.com">
-        the docs at reactrouter.com
-      </a>
-      .
-    </p>
-  )
-}
+```jsx src/routes/index.jsx
+// from ../src/routes/index.jsx
 ```
+
+---
 
 👉 **Configure the index route**
 
-```jsx filename=src/main.jsx lines=[2,12]
-// existing code
-import Index from './routes/index'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
-    children: [
-      { index: true, element: <Index /> },
-      /* existing routes */
-    ],
-  },
-])
+```jsx src/main.jsx
+// from ../src/main.13.jsx
 ```
 
 Note the [`{ index:true }`][index] instead of [`{ path: "" }`][path]. That tells the router to match and render this route when the user is at the parent route's exact path, so there are no other child routes to render in the `<Outlet>`.
@@ -833,6 +809,8 @@ Note the [`{ index:true }`][index] instead of [`{ path: "" }`][path]. That tells
 
 Voila! No more blank space. It's common to put dashboards, stats, feeds, etc. at index routes. They can participate in data loading as well.
 
+---
+
 ## Cancel Button
 
 On the edit page we've got a cancel button that doesn't do anything yet. We'd like it to do the same thing as the browser's back button.
@@ -841,36 +819,8 @@ We'll need a click handler on the button as well as [`useNavigate`][usenavigate]
 
 👉 **Add the cancel button click handler with `useNavigate`**
 
-```jsx filename=src/routes/edit.jsx lines=[5,10,20-22]
-import {
-  Form,
-  useLoaderData,
-  redirect,
-  useNavigate,
-} from 'react-router-dom'
-
-export default function EditContact() {
-  const { contact } = useLoaderData()
-  const navigate = useNavigate()
-
-  return (
-    <Form method="post" id="contact-form">
-      {/* existing code */}
-
-      <p>
-        <button type="submit">Save</button>
-        <button
-          type="button"
-          onClick={() => {
-            navigate(-1)
-          }}
-        >
-          Cancel
-        </button>
-      </p>
-    </Form>
-  )
-}
+```jsx src/routes/edit.jsx
+// from ../src/routes/edit.03.jsx
 ```
 
 Now when the user clicks "Cancel", they'll be sent back one entry in the browser's history.
@@ -885,7 +835,7 @@ Two more features to go. We're on the home stretch!
 
 All of our interactive UI so far have been either links that change the URL or forms that post data to actions. The search field is interesting because it's a mix of both: it's a form but it only changes the URL, it doesn't change data.
 
-Right now it's just a normal HTML `<form>`, not a React Router `<Form>`. Let's see what the browser does with it by default:
+Right now it's just a normal HTML _`<form>`_, not a React Router _`<Form>`_. Let's see what the browser does with it by default:
 
 👉 **Type a name into the search field and hit the enter key**
 
@@ -897,7 +847,7 @@ http://127.0.0.1:5173/?q=ryan
 
 If we review the search form, it looks like this:
 
-```jsx filename=src/routes/root.jsx lines=[1,7]
+```jsx src/routes/root.jsx focus=1,7
 <form id="search-form" role="search">
   <input
     id="q"
@@ -911,39 +861,28 @@ If we review the search form, it looks like this:
 </form>
 ```
 
-As we've seen before, browsers can serialize forms by the `name` attribute of it's input elements. The name of this input is `q`, that's why the URL has `?q=`. If we named it `search` the URL would be `?search=`.
+As we've seen before, browsers can serialize forms by the _`name`_ attribute of it's input elements. The name of this input is _`q`_, that's why the URL has _`?q=`_. If we named it `search` the URL would be _`?search=`_.
 
-Note that this form is different from the others we've used, it does not have `<form method="post">`. The default `method` is `"get"`. That means when the browser creates the request for the next document, it doesn't put the form data into the request POST body, but into the [`URLSearchParams`][urlsearchparams] of a GET request.
+Note that this form is different from the others we've used, it does not have _`<form method="post">`_. The default _`method`_ is _`"get"`_. That means when the browser creates the request for the next document, it doesn't put the form data into the request POST body, but into the [`URLSearchParams`][urlsearchparams] of a GET request.
+
+---
 
 ## GET Submissions with Client Side Routing
 
 Let's use client side routing to submit this form and filter the list in our existing loader.
 
-👉 **Change `<form>` to `<Form>`**
+👉 **Change _`<form>`_ to _`<Form>`_**
 
-```jsx filename=src/routes/root.jsx lines=[1,11]
-<Form id="search-form" role="search">
-  <input
-    id="q"
-    aria-label="Search contacts"
-    placeholder="Search"
-    type="search"
-    name="q"
-  />
-  <div id="search-spinner" aria-hidden hidden={true} />
-  <div className="sr-only" aria-live="polite"></div>
-</Form>
+```jsx src/routes/root.jsx
+// from ../src/routes/root.11.jsx
 ```
+
+---
 
 👉 **Filter the list if there are URLSearchParams**
 
-```jsx filename=src/routes/root.jsx lines=[1,2-4]
-export async function loader({ request }) {
-  const url = new URL(request.url)
-  const q = url.searchParams.get('q')
-  const contacts = await getContacts(q)
-  return { contacts }
-}
+```jsx src/routes/root.jsx
+// from ../src/routes/root.12.jsx
 ```
 
 <img
@@ -956,6 +895,8 @@ Because this is a GET, not a POST, React Router _does not_ call the `action`. Su
 
 This also means it's a normal page navigation. You can click the back button to get back to where you were.
 
+---
+
 ## Synchronizing URLs to Form State
 
 There are a couple of UX issues here that we can take care of quickly.
@@ -965,46 +906,10 @@ There are a couple of UX issues here that we can take care of quickly.
 
 In other words, the URL and our form state are out of sync.
 
-👉 **Return `q` from your loader and set it as the search field default value**
+👉 **Return _`q`_ from your loader and set it as the search field default value**
 
-```jsx filename=src/routes/root.jsx lines=[7,11,26]
-// existing code
-
-export async function loader({ request }) {
-  const url = new URL(request.url)
-  const q = url.searchParams.get('q')
-  const contacts = await getContacts(q)
-  return { contacts, q }
-}
-
-export default function Root() {
-  const { contacts, q } = useLoaderData()
-  const navigation = useNavigation()
-
-  return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-        <div>
-          <Form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search contacts"
-              placeholder="Search"
-              type="search"
-              name="q"
-              defaultValue={q}
-            />
-            {/* existing code */}
-          </Form>
-          {/* existing code */}
-        </div>
-        {/* existing code */}
-      </div>
-      {/* existing code */}
-    </>
-  )
-}
+```jsx src/routes/root.jsx
+// from ../src/routes/root.13.jsx
 ```
 
 That solves problem (2). If you refresh the page now, the input field will show the query.
@@ -1015,25 +920,14 @@ That solves problem (2). If you refresh the page now, the input field will show 
   src="https://reactrouter.com/_docs/tutorial/21.webp"
 />
 
+---
+
 Now for problem (1), clicking the back button and updating the input. We can bring in `useEffect` from React to manipulate the form's state in the DOM directly.
 
 👉 **Synchronize input value with the URL Search Params**
 
-```jsx filename=src/routes/root.jsx lines=[1,9-11]
-import { useEffect } from 'react'
-
-// existing code
-
-export default function Root() {
-  const { contacts, q } = useLoaderData()
-  const navigation = useNavigation()
-
-  useEffect(() => {
-    document.getElementById('q').value = q
-  }, [q])
-
-  // existing code
-}
+```jsx src/routes/root.jsx
+// from ../src/routes/root.14.jsx
 ```
 
 > 🤔 Shouldn't you use a controlled component and React State for this?
@@ -1045,7 +939,7 @@ You could certainly do this as a controlled component, but you'll end up with mo
 
 Notice how controlling the input requires three points of synchronization now instead of just one. The behavior is identical but the code is more complex.
 
-```jsx filename=src/routes/root.jsx lines=[1,6,15,18-20,34-37]
+```jsx src/routes/root.jsx focus=1,6,15,18:20,34:37
 import { useEffect, useState } from 'react'
 // existing code
 
@@ -1097,56 +991,21 @@ export default function Root() {
 
 </details>
 
+---
+
 ## Submitting Forms `onChange`
 
 We've got a product decision to make here. For this UI, we'd probably rather have the filtering happen on every key stroke instead of when the form is explicitly submitted.
 
-We've seen `useNavigate` already, we'll use its cousin, [`useSubmit`][usesubmit], for this.
+We've seen _`useNavigate`_ already, we'll use its cousin, [`useSubmit`][usesubmit], for this.
 
-```jsx filename=src/routes/root.jsx lines=[4,10,25-27]
-// existing code
-import {
-  // existing code
-  useSubmit,
-} from 'react-router-dom'
-
-export default function Root() {
-  const { contacts, q } = useLoaderData()
-  const navigation = useNavigation()
-  const submit = useSubmit()
-
-  return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-        <div>
-          <Form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search contacts"
-              placeholder="Search"
-              type="search"
-              name="q"
-              defaultValue={q}
-              onChange={(event) => {
-                submit(event.currentTarget.form)
-              }}
-            />
-            {/* existing code */}
-          </Form>
-          {/* existing code */}
-        </div>
-        {/* existing code */}
-      </div>
-      {/* existing code */}
-    </>
-  )
-}
+```jsx src/routes/root.jsx
+// from ../src/routes/root.15.jsx
 ```
 
 Now as you type, the form is submitted automatically!
 
-Note the argument to [`submit`][usesubmit]. We're passing in `event.currentTarget.form`. The `currentTarget` is the DOM node the event is attached to, and the `currentTarget.form` is the input's parent form node. The `submit` function will serialize and submit any form you pass to it.
+Note the argument to [`submit`][usesubmit]. We're passing in `event.currentTarget.form`. The `currentTarget` is the DOM node the event is attached to, and the `currentTarget.form` is the input's parent form node. **The `submit` function will serialize and submit any form you pass to it.**
 
 ## Adding Search Spinner
 
@@ -1156,7 +1015,7 @@ Without any loading indicator, the search feels kinda sluggish. Even if we could
 
 👉 **Add the search spinner**
 
-```jsx filename=src/routes/root.jsx lines=[8-12,26,32]
+```jsx src/routes/root.jsx lines=[8-12,26,32]
 // existing code
 
 export default function Root() {
@@ -1222,7 +1081,7 @@ We can avoid this by _replacing_ the current entry in the history stack with the
 
 👉 **Use `replace` in `submit`**
 
-```jsx filename=src/routes/root.jsx lines=[16-19]
+```jsx src/routes/root.jsx lines=[16-19]
 // existing code
 
 export default function Root() {
@@ -1270,7 +1129,7 @@ The ★ button on the contact page makes sense for this. We aren't creating or d
 
 👉 **Change the `<Favorite>` form to a fetcher form**
 
-```jsx filename=src/routes/contact.jsx lines=[4,10,14,26]
+```jsx src/routes/contact.jsx lines=[4,10,14,26]
 import {
   useLoaderData,
   Form,
@@ -1305,7 +1164,7 @@ Might want to take a look at that form while we're here. As always, our form has
 
 👉 **Create the action**
 
-```jsx filename=src/routes/contact.jsx lines=[2,4-9]
+```jsx src/routes/contact.jsx lines=[2,4-9]
 // existing code
 import { getContact, updateContact } from '../contacts'
 
@@ -1325,7 +1184,7 @@ Pretty simple. Pull the form data off the request and send it to the data model.
 
 👉 **Configure the route's new action**
 
-```jsx filename=src/main.jsx lines=[4,20]
+```jsx src/main.jsx lines=[4,20]
 // existing code
 import Contact, {
   loader as contactLoader,
@@ -1375,7 +1234,7 @@ The fetcher knows the form data being submitted to the action, so it's available
 
 👉 **Read the optimistic value from `fetcher.formData`**
 
-```jsx filename=src/routes/contact.jsx lines=[7-9]
+```jsx src/routes/contact.jsx lines=[7-9]
 // existing code
 
 function Favorite({ contact }) {
@@ -1422,7 +1281,7 @@ Whenever you have an expected error case in a loader or action–like the data n
 
 👉 **Throw a 404 response in the loader**
 
-```jsx filename=src/routes/contact.jsx lines=[2-9]
+```jsx src/routes/contact.jsx lines=[2-9]
 export async function loader({ params }) {
   const contact = await getContact(params.contactId)
   if (!contact) {
@@ -1463,7 +1322,7 @@ There's a cleaner way. Routes can be used _without_ a path, which lets them part
 
 👉 **Wrap the child routes in a pathless route**
 
-```jsx filename=src/main.jsx lines=[9-21]
+```jsx src/main.jsx lines=[9-21]
 createBrowserRouter([
   {
     path: '/',

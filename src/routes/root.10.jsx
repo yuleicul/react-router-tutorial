@@ -1,4 +1,4 @@
-// focus(8,28,47:49)
+// focus(30,47)
 import {
   Outlet,
   NavLink,
@@ -6,31 +6,22 @@ import {
   Form,
   redirect,
   useNavigation,
-  useSubmit,
 } from 'react-router-dom'
 import { getContacts, createContact } from '../contacts'
-import { useEffect } from 'react'
 
 export async function action() {
   const contact = await createContact()
   return redirect(`/contacts/${contact.id}/edit`)
 }
 
-export async function loader({ request }) {
-  const url = new URL(request.url)
-  const q = url.searchParams.get('q')
-  const contacts = await getContacts(q)
-  return { contacts, q }
+export async function loader() {
+  const contacts = await getContacts()
+  return { contacts }
 }
 
 export default function Root() {
-  const { contacts, q } = useLoaderData()
+  const { contacts } = useLoaderData()
   const navigation = useNavigation()
-  const submit = useSubmit()
-
-  useEffect(() => {
-    document.getElementById('q').value = q
-  }, [q])
 
   return (
     <>
@@ -44,10 +35,6 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
-              defaultValue={q}
-              onChange={(event) => {
-                submit(event.currentTarget.form)
-              }}
             />
             <div
               id="search-spinner"
