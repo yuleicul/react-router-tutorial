@@ -3,7 +3,9 @@ const { remarkCodeHike } = require('@code-hike/mdx')
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [[remarkCodeHike, { theme: 'nord' }]],
+    remarkPlugins: [
+      [remarkCodeHike, { theme: 'poimandres' }],
+    ],
   },
 })
 

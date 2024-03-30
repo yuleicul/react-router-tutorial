@@ -1,18 +1,128 @@
+@import '@unocss/reset/tailwind.css';
+@unocss all;
+
+h1 {
+  @apply text-4xl font-montserrat font-900 pb-5 pt-10;
+}
+
+h2 {
+  @apply text-3xl font-montserrat font-700 pb-5 pt-8;
+}
+
+p {
+  @apply text-base font-merriweather py-3;
+}
+
+a {
+  @apply cursor-pointer underline underline-dashed;
+}
+
 .ch-scrollycoding {
-  flex-direction: row-reverse;
+  @apply max-w-screen-xl flex-row-reverse mx-auto my-0 gap-0;
+
+  .ch-scrollycoding-content {
+    @apply flex-1 text-brand-1 p-10 bg-brand-2;
+
+    .ch-scrollycoding-step-content {
+      @apply px-5 max-w-lg min-w-0;
+      /* @apply w-full */
+      /* @apply border-none; */
+
+      .ch-codeblock,
+      .ch-codegroup,
+      .ch-inline-code {
+        --ch-t-background: var(--brand-1);
+        --ch-t-tab-activeBackground: var(--brand-1);
+        --ch-t-tab-inactiveBackground: var(--brand-1);
+        --ch-t-tab-activeBorder: #ffffff1f;
+        --ch-t-editorGroupHeader-tabsBackground: var(
+          --brand-1
+        );
+        --ch-t-lighter-inlineBackground: var(--brand-1);
+      }
+    }
+    .ch-scrollycoding-step-content[data-selected] {
+      @apply border-brand-1;
+    }
+  }
+
+  .ch-scrollycoding-sticker {
+    @apply flex-1 max-h-unset h-screen top-0 py-5 px-10 bg-brand-1;
+
+    .ch-codegroup {
+      --ch-t-colorScheme: dark;
+      --ch-t-foreground: #a6accd;
+      --ch-t-background: #33333333;
+      --ch-t-lighter-inlineBackground: #3333332e;
+      --ch-t-editor-background: #33333333;
+      --ch-t-editor-foreground: #a6accd;
+      --ch-t-editor-lineHighlightBackground: #717cb425;
+      --ch-t-editor-rangeHighlightBackground: #ffffff0b;
+      --ch-t-editor-infoForeground: #ffffffff;
+      --ch-t-editor-selectionBackground: #717cb425;
+      --ch-t-focusBorder: #00000000;
+      --ch-t-tab-activeBackground: #33333366;
+      --ch-t-tab-activeForeground: #e4f0fb;
+      --ch-t-tab-inactiveBackground: #33333333;
+      --ch-t-tab-inactiveForeground: #767c9d;
+      --ch-t-tab-border: #00000000;
+      --ch-t-tab-activeBorder: #33333366;
+      --ch-t-editorGroup-border: #00000030;
+      --ch-t-editorGroupHeader-tabsBackground: #33333333;
+      --ch-t-editorLineNumber-foreground: #767c9d50;
+      --ch-t-input-background: #ffffff05;
+      --ch-t-input-foreground: #e4f0fb;
+      --ch-t-input-border: #ffffff10;
+      --ch-t-icon-foreground: #a6accd;
+      --ch-t-sideBar-background: #1b1e28;
+      --ch-t-sideBar-foreground: #767c9d;
+      --ch-t-sideBar-border: #1b1e28;
+      --ch-t-list-activeSelectionBackground: #30334080;
+      --ch-t-list-activeSelectionForeground: #e4f0fb;
+      --ch-t-list-hoverBackground: #30334080;
+      --ch-t-list-hoverForeground: #e4f0fb;
+      @apply max-h-unset h-screen;
+    }
+
+    .ch-codeblock {
+      --ch-t-background: var(--brand-1);
+      --ch-t-tab-activeBackground: var(--brand-1);
+      --ch-t-tab-inactiveBackground: var(--brand-1);
+      --ch-t-tab-activeBorder: #ffffff1f;
+      --ch-t-editorGroupHeader-tabsBackground: var(
+        --brand-1
+      );
+      --ch-t-lighter-inlineBackground: var(--brand-1);
+    }
+
+    .ch-expand-dialog-content {
+      @apply border-4;
+      border-color: var(--brand-2);
+
+      .ch-code-browser-sidebar {
+        @apply bg-brand-2;
+      }
+
+      .ch-code-browser-content {
+        @apply bg-brand-1 text-sm;
+      }
+    }
+  }
 }
 
-.ch-scrollycoding-sticker {
-  flex: 1 1;
-  max-height: unset;
-  height: 95vh;
-  top: 2.5vh;
-}
+.ch-scrollycoding-static {
+  @apply bg-brand-2 text-brand-1 p-5;
 
-.ch-scrollycoding-sticker .ch-codeblock,
-.ch-scrollycoding-sticker .ch-codegroup {
-  max-height: unset;
-  height: 95vh;
+  .ch-codeblock,
+  .ch-codegroup,
+  .ch-inline-code {
+    --ch-t-background: var(--brand-1);
+    --ch-t-tab-activeBackground: var(--brand-1);
+    --ch-t-tab-inactiveBackground: var(--brand-1);
+    --ch-t-tab-activeBorder: #ffffff1f;
+    --ch-t-editorGroupHeader-tabsBackground: var(--brand-1);
+    --ch-t-lighter-inlineBackground: var(--brand-1);
+  }
 }
 
 img.tutorial {
@@ -21,7 +131,6 @@ img.tutorial {
 
 table {
   border-collapse: collapse;
-  border-color: inherit;
   border-spacing: 0;
   display: block;
   margin-bottom: 2.5rem;
@@ -35,10 +144,8 @@ table {
 
 table th {
   background-color: transparent;
-  --border-color: rgb(200 200 200);
   --border-width: 2px;
-  border-bottom: var(--border-width) solid
-    var(--border-color);
+  border-bottom: var(--border-width) solid var(--brand-1);
   font-weight: 600;
   padding: 0 1rem 0.25rem 0;
   position: sticky;
@@ -47,10 +154,8 @@ table th {
 
 table td {
   background-color: transparent;
-  --border-color: rgb(227 227 227);
   --border-width: 1px;
-  border-bottom: var(--border-width) solid
-    var(--border-color);
+  border-bottom: var(--border-width) solid var(--brand-1);
   padding: 0.5rem 1rem 0.5rem 0;
   white-space: nowrap;
 }

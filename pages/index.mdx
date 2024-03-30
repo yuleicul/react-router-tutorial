@@ -1,29 +1,21 @@
-todo: forwords
-the source: https://reactrouter.com/en/main/start/tutorial
+<CH.Scrollycoding showCopyButton={true} showExpandButton={true} lineNumbers={true}>
+
+# React Router Tutorial
+
+```
+April 1, 2024
+```
+
+An alternative take on [React Router's official tutorial](https://reactrouter.com/en/main/start/tutorial), built with [CodeHike](https://codehike.org/).
 
 ---
-
-title: Tutorial
-order: 2
-
----
-
-# Tutorial
 
 Welcome to the tutorial! We'll be building a small, but feature-rich app that lets you keep track of your contacts. We expect it to take between 30-60m if you're following along.
-
-<CH.Preview style={{ height: '100vh' }}>
-  <iframe src="http://localhost:5173/" />
-</CH.Preview>
-{/* style={{ height: '100vh', position: 'unset' }} */}
-
-todo: put the completed application here
 
 👉 **Every time you see this it means you need to do something in the app!**
 
 The rest is just there for your information and deeper understanding. Let's get to it.
 
-<CH.Scrollycoding showCopyButton={true} showExpandButton={true} lineNumbers={true}>
 ## Setup
 
 <docs-info>If you're not going to follow along in your own app, you can skip this section</docs-info>
@@ -140,7 +132,7 @@ Nothing React Router specific yet, so feel free to copy/paste all of that.
 The app should look something like this now. It sure is nice having a designer who can also write the CSS, isn't it? (Thank you [Jim][jim] 🙏).
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/01.webp"
 />
@@ -156,7 +148,7 @@ We added some links to this app, let's see what happens when we click them?
 👉 **Click one of the sidebar names**
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   alt="screenshot of default React Router error element"
   src="https://reactrouter.com/_docs/tutorial/02.webp"
@@ -189,7 +181,7 @@ touch src/error-page.jsx
 The error page should now look like this:
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   alt="new error page, but still ugly"
   src="https://reactrouter.com/_docs/tutorial/03.webp"
@@ -240,7 +232,7 @@ Now that we've got a component, let's hook it up to a new route.
 Now if we click one of the links or visit `/contacts/1` we get our new component!
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   alt="contact route rendering without the parent layout"
   src="https://reactrouter.com/_docs/tutorial/04.webp"
@@ -255,7 +247,7 @@ However, it's not inside of our root layout 😠
 We want the contact component to render _inside_ of the `<Root>` layout like this.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/05.webp"
 />
@@ -357,7 +349,7 @@ There are two APIs we'll be using to load data, [`loader`][loader] and [`useLoad
 That's it! React Router will now automatically keep that data in sync with your UI. We don't have any data yet, so you're probably getting a blank list like this:
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/06.webp"
 />
@@ -377,7 +369,7 @@ Without client side routing, the browser will serialize the form's data automati
 We can test this out by clicking the "New" button in our app. The app should blow up because the Vite server isn't configured to handle a POST request (it sends a 404, though it should probably be a 405 🤷).
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/07.webp"
 />
@@ -407,7 +399,7 @@ We'll create new contacts by exporting an `action` in our root route, wiring it 
 That's it! Go ahead and click the "New" button and you should see a new record pop into the list 🥳
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/08.webp"
 />
@@ -427,7 +419,7 @@ This is where the "old school web" programming model shows up. As we discussed e
 We should be seeing our old static contact page again, with one difference: the URL now has a real ID for the record.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/09.webp"
 />
@@ -464,7 +456,7 @@ These params are most often used to find a record by ID. Let's try it out.
 ```
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/10.webp"
 />
@@ -504,7 +496,7 @@ We want it to be rendered in the root route's outlet, so we made it a sibling to
 Alright, clicking the "Edit" button gives us this new UI:
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/11.webp"
 />
@@ -532,7 +524,7 @@ The edit route we just created already renders a form. All we need to do to upda
 Fill out the form, hit save, and you should see something like this! <small>(Except easier on the eyes and maybe less hairy.)</small>
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/12.webp"
 />
@@ -608,7 +600,7 @@ Now that we know how to redirect, let's update the action that creates new conta
 Now when we click "New", we should end up on the edit page:
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/13.webp"
 />
@@ -618,7 +610,7 @@ Now when we click "New", we should end up on the edit page:
 I'm going to use the stellar lineup of speakers from the first Remix Conference 😁
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/14.webp"
 />
@@ -638,7 +630,7 @@ Now that we have a bunch of records, it's not clear which one we're looking at i
 Note that we are passing a function to _`className`_. When the user is at the URL in the _`NavLink`_, then _`isActive`_ will be true. When it's _about_ to be active (the data is still loading) then _`isPending`_ will be true. This allows us to easily indicate where the user is, as well as provide immediate feedback on links that have been clicked but we're still waiting for data to load.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/15.webp"
 />
@@ -662,7 +654,7 @@ React Router is managing all of the state behind the scenes and reveals the piec
 In our case, we add a _`"loading"`_ class to the main part of the app if we're not idle. The CSS then adds a nice fade after a short delay (to avoid flickering the UI for fast loads). You could do anything you want though, like show a spinner or loading bar across the top.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/16.webp"
 />
@@ -728,7 +720,7 @@ Add a form, add an action, React Router does the rest.
 ```
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/17.webp"
 />
@@ -746,7 +738,7 @@ Recognize that screen? It's our [`errorElement`][errorelement] from before. The 
 Now try it again:
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/18.webp"
 />
@@ -776,7 +768,7 @@ export async function action({ params }) {
 When we load up the app, you'll notice a big blank page on the right side of our list.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/19.webp"
 />
@@ -802,7 +794,7 @@ Feel free to copy paste, nothing special here.
 Note the [`{ index:true }`][index] instead of [`{ path: "" }`][path]. That tells the router to match and render this route when the user is at the parent route's exact path, so there are no other child routes to render in the `<Outlet>`.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/20.webp"
 />
@@ -886,7 +878,7 @@ Let's use client side routing to submit this form and filter the list in our exi
 ```
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/21.webp"
 />
@@ -915,7 +907,7 @@ In other words, the URL and our form state are out of sync.
 That solves problem (2). If you refresh the page now, the input field will show the query.
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/21.webp"
 />
@@ -1060,7 +1052,7 @@ export default function Root() {
 ```
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/22.webp"
 />
@@ -1072,7 +1064,7 @@ The `navigation.location` will show up when the app is navigating to a new URL a
 Now that the form is submitted for every key stroke, if we type the characters "seba" and then delete them with backspace, we end up with 7 new entries in the stack 😂. We definitely don't want this
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/23.webp"
 />
@@ -1215,7 +1207,7 @@ const router = createBrowserRouter([
 Alright, we're ready to click the star next to the user's name!
 
 <img
-  class="tutorial"
+  className="tutorial"
   loading="lazy"
   src="https://reactrouter.com/_docs/tutorial/24.webp"
 />
@@ -1271,7 +1263,7 @@ What happens if the contact we're trying to load doesn't exist?
 
 <img
   loading="lazy"
-  class="tutorial"
+  className="tutorial"
   src="https://reactrouter.com/_docs/tutorial/25.webp"
 />
 
@@ -1296,7 +1288,7 @@ export async function loader({ params }) {
 
 <img
   loading="lazy"
-  class="tutorial"
+  className="tutorial"
   src="https://reactrouter.com/_docs/tutorial/27.webp"
 />
 
@@ -1312,7 +1304,7 @@ We'd like it to look like this:
 
 <img
   loading="lazy"
-  class="tutorial"
+  className="tutorial"
   src="https://reactrouter.com/_docs/tutorial/26.webp"
 />
 
