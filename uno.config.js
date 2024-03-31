@@ -26,7 +26,10 @@ export default defineConfig({
           },
         ],
         merriweather: [
-          'Merriweather',
+          {
+            name: 'Merriweather',
+            weights: [400, 700],
+          },
           {
             name: 'serif',
             provider: 'none',

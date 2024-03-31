@@ -1,22 +1,24 @@
-<section id="intro">
+<section id="foreword" className="pt-[30vh]">
 
 # React Router Tutorial
 
-```
-April 1, 2024
-```
+<p className="text-sm">April 1, 2024</p>
 
-An alternative take on [React Router's official tutorial](https://reactrouter.com/en/main/start/tutorial), built with [CodeHike](https://codehike.org/).
+An alternative take on [React Router's official tutorial][reactroutertutorial], built with [CodeHike][codehike].
 
 </section>
 
-<CH.Scrollycoding showCopyButton={true} showExpandButton={true} lineNumbers={true}>
+<section id="foreword" className="pt-10">
 
-Welcome to the tutorial! We'll be building a small, but feature-rich app that lets you keep track of your contacts. We expect it to take between 30-60m if you're following along.
+Welcome to the tutorial! We'll be building [a small, but feature-rich app][reactroutertutorialapp] that lets you keep track of your contacts. We expect it to take between 30-60m if you're following along.
 
 👉 **Every time you see this it means you need to do something in the app!**
 
 The rest is just there for your information and deeper understanding. Let's get to it.
+
+</section>
+
+<CH.Scrollycoding showCopyButton={true} showExpandButton={true} lineNumbers={true}>
 
 ## Setup
 
@@ -34,8 +36,6 @@ npm install react-router-dom localforage match-sorter sort-by
 npm run dev
 ```
 
----
-
 You should be able to visit the URL printed in the terminal:
 
 ```
@@ -52,7 +52,9 @@ We've got some pre-written CSS for this tutorial so we can stay focused on React
 👉 **Copy/Paste the tutorial CSS into `src/index.css`**
 
 ```css src/index.css
-/* // from ../src/index.css */
+/* 
+// from ../src/index.css
+ */
 ```
 
 ---
@@ -82,7 +84,6 @@ If your app is running, it might blow up momentarily, just keep going 😋. And 
 
 ## Adding a Router
 
-{/* todo: update the link */}
 First thing to do is create a [Browser Router][createbrowserrouter] and configure our first route. This will enable client side routing for our web app.
 
 The `main.jsx` file is the entry point. Open it up and we'll put React Router on the page.
@@ -101,21 +102,7 @@ This first route is what we often call the "root route" since the rest of our ro
 
 Let's add the global layout for this app.
 
-👉 **Create `src/routes` and `src/routes/root.jsx`**
-
-```sh
-mkdir src/routes
-touch src/routes/root.jsx
-```
-
-<small>
-  (If you don't want to be a command line nerd, use your
-  editor instead of those commands 🤓)
-</small>
-
----
-
-👉 **Create the root layout component**
+👉 **Create `src/routes/root.jsx`** and create the root layout component\*\*
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.01.jsx
@@ -158,18 +145,12 @@ We added some links to this app, let's see what happens when we click them?
 
 Gross! This is the default error screen in React Router, made worse by our flex box styles on the root element in this app 😂.
 
----
-
 Anytime your app throws an error while rendering, loading data, or performing data mutations, React Router will catch it and render an error screen. Let's make our own error page.
 
 👉 **Create an error page component**
 
 ```jsx src/error-page.jsx
 // from ../src/error-page.jsx
-```
-
-```sh
-touch src/error-page.jsx
 ```
 
 ---
@@ -196,7 +177,6 @@ The error page should now look like this:
   blames the designer for not thinking of it 😆)
 </small>
 
-{/* todo: codehike link? */}
 Note that [`useRouteError`][userouteerror] provides the error that was thrown. When the user navigates to routes that don't exist you'll get an [error response][isrouteerrorresponse] with a "Not Found" `statusText`. We'll see some other errors later in the tutorial and discuss them more.
 
 For now, it's enough to know that pretty much all of your errors will now be handled by this page instead of infinite spinners, unresponsive pages, or blank screens 🙌
@@ -207,17 +187,11 @@ For now, it's enough to know that pretty much all of your errors will now be han
 
 Instead of a 404 "Not Found" page, we want to actually render something at the URLs we've linked to. For that, we need to make a new route.
 
-👉 **Create the contact route module**
+👉 **Create the contact route module `src/routes/contact.jsx` and add the contact component UI **
 
 ```jsx src/routes/contact.jsx
 // from ../src/routes/contact.01.jsx
 ```
-
-```sh
-touch src/routes/contact.jsx
-```
-
-👉 **Add the contact component UI**
 
 It's just a bunch of elements, feel free to copy/paste.
 
@@ -266,7 +240,7 @@ We do it by making the contact route a _child_ of the root route.
 
 You'll now see the root layout again but a blank page on the right. We need to tell the root route _where_ we want it to render its child routes. We do that with [`<Outlet>`][outlet].
 
-Find the _`<div id="detail">`_ and put an outlet inside
+Find the `<div id="detail">` and put an outlet inside
 
 👉 **Render an [`<Outlet>`][outlet]**
 
@@ -282,7 +256,7 @@ You may or may not have noticed, but when we click the links in the sidebar, the
 
 Client side routing allows our app to update the URL without requesting another document from the server. Instead, the app can immediately render new UI. Let's make it happen with [`<Link>`][link].
 
-👉 **Change the sidebar _`<a href>`_ to _`<Link to>`_**
+👉 **Change the sidebar `<a href>` to `<Link to>`**
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.03.jsx
@@ -382,9 +356,9 @@ Instead of sending that POST to the Vite server to create a new contact, let's u
 
 ## Creating Contacts
 
-We'll create new contacts by exporting an `action` in our root route, wiring it up to the route config, and changing our _`<form>`_ to a React Router [`<Form>`][form].
+We'll create new contacts by exporting an `action` in our root route, wiring it up to the route config, and changing our `<form>` to a React Router [`<Form>`][form].
 
-👉 **Create the action and change _`<form>`_ to _`<Form>`_**
+👉 **Create the action and change `<form>` to `<Form>`**
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.06.jsx
@@ -406,7 +380,7 @@ That's it! Go ahead and click the "New" button and you should see a new record p
   src="https://reactrouter.com/_docs/tutorial/08.webp"
 />
 
-The _`createContact`_ method just creates an empty contact with no name or data or anything. But it does still create a record, promise!
+The `createContact` method just creates an empty contact with no name or data or anything. But it does still create a record, promise!
 
 > 🧐 Wait a sec ... How did the sidebar update? Where did we call the `action`? Where's the code to refetch the data? Where are `useState`, `onSubmit` and `useEffect`?!
 
@@ -441,13 +415,13 @@ Reviewing the route config, the route looks like this:
 ]
 ```
 
-Note the _`:contactId`_ URL segment. The colon (`:`) has special meaning, turning it into a "dynamic segment". Dynamic segments will match dynamic (changing) values in that position of the URL, like the contact ID. We call these values in the URL "URL Params", or just "params" for short.
+Note the `:contactId` URL segment. The colon (`:`) has special meaning, turning it into a "dynamic segment". Dynamic segments will match dynamic (changing) values in that position of the URL, like the contact ID. We call these values in the URL "URL Params", or just "params" for short.
 
-These [`params`][params] are passed to the loader with keys that match the dynamic segment. For example, our segment is named _`:contactId`_ so the value will be passed as _`params.contactId`_.
+These [`params`][params] are passed to the loader with keys that match the dynamic segment. For example, our segment is named `:contactId` so the value will be passed as `params.contactId`.
 
 These params are most often used to find a record by ID. Let's try it out.
 
-👉 **Add a loader to the contact page and access data with _`useLoaderData`_**
+👉 **Add a loader to the contact page and access data with `useLoaderData`**
 
 ---
 
@@ -493,7 +467,7 @@ Nothing we haven't seen before, feel free to copy/paste:
 
 We want it to be rendered in the root route's outlet, so we made it a sibling to the existing child route.
 
-(You might note we reused the _`contactLoader`_ for this route. This is only because we're being lazy in the tutorial. There is no reason to attempt to share loaders among routes, they usually have their own.)
+(You might note we reused the `contactLoader` for this route. This is only because we're being lazy in the tutorial. There is no reason to attempt to share loaders among routes, they usually have their own.)
 
 Alright, clicking the "Edit" button gives us this new UI:
 
@@ -629,7 +603,7 @@ Now that we have a bunch of records, it's not clear which one we're looking at i
 // from ../src/routes/root.08.jsx
 ```
 
-Note that we are passing a function to _`className`_. When the user is at the URL in the _`NavLink`_, then _`isActive`_ will be true. When it's _about_ to be active (the data is still loading) then _`isPending`_ will be true. This allows us to easily indicate where the user is, as well as provide immediate feedback on links that have been clicked but we're still waiting for data to load.
+Note that we are passing a function to `className`. When the user is at the URL in the `NavLink`, then `isActive` will be true. When it's _about_ to be active (the data is still loading) then `isPending` will be true. This allows us to easily indicate where the user is, as well as provide immediate feedback on links that have been clicked but we're still waiting for data to load.
 
 <img
   className="tutorial"
@@ -651,9 +625,9 @@ React Router is managing all of the state behind the scenes and reveals the piec
 // from ../src/routes/root.09.jsx
 ```
 
-[`useNavigation`][usenavigation] returns the current navigation state: it can be one of _`"idle" | "submitting" | "loading"`_.
+[`useNavigation`][usenavigation] returns the current navigation state: it can be one of `"idle" | "submitting" | "loading"`.
 
-In our case, we add a _`"loading"`_ class to the main part of the app if we're not idle. The CSS then adds a nice fade after a short delay (to avoid flickering the UI for fast loads). You could do anything you want though, like show a spinner or loading bar across the top.
+In our case, we add a `"loading"` class to the main part of the app if we're not idle. The CSS then adds a nice fade after a short delay (to avoid flickering the UI for fast loads). You could do anything you want though, like show a spinner or loading bar across the top.
 
 <img
   className="tutorial"
@@ -669,13 +643,13 @@ Note that our data model (`src/contacts.js`) has a clientside cache, so navigati
 
 If we review code in the contact route, we can find the delete button looks like [this](focus://src/routes/contact.jsx#50:64)
 
-Note the _`action`_ points to _`"destroy"`_. Like _`<Link to>`_, _`<Form action>`_ can take a _relative_ value. Since the form is rendered in _`contact/:contactId`_, then a relative action with _`destroy`_ will submit the form to _`contact/:contactId/destroy`_ when clicked.
+Note the `action` points to `"destroy"`. Like `<Link to>`, `<Form action>` can take a _relative_ value. Since the form is rendered in `contact/:contactId`, then a relative action with `destroy` will submit the form to `contact/:contactId/destroy` when clicked.
 
 At this point you should know everything you need to know to make the delete button work. Maybe give it a shot before moving on? You'll need:
 
 1. A new route
-2. An _`action`_ at that route
-3. _`deleteContact`_ from _`src/contacts.js`_
+2. An `action` at that route
+3. `deleteContact` from `src/contacts.js`
 
 ---
 
@@ -705,9 +679,9 @@ Alright, navigate to a record and click the "Delete" button. It works!
 
 When the user clicks the submit button:
 
-1. _`<Form>`_ prevents the default browser behavior of sending a new POST request to the server, but instead emulates the browser by creating a POST request with client side routing
-2. The _`<Form action="destroy">`_ matches the new route at _`"contacts/:contactId/destroy"`_ and sends it the request
-3. After the action redirects, React Router calls all of the loaders for the data on the page to get the latest values (this is "revalidation"). _`useLoaderData`_ returns new values and causes the components to update!
+1. `<Form>` prevents the default browser behavior of sending a new POST request to the server, but instead emulates the browser by creating a POST request with client side routing
+2. The `<Form action="destroy">` matches the new route at `"contacts/:contactId/destroy"` and sends it the request
+3. After the action redirects, React Router calls all of the loaders for the data on the page to get the latest values (this is "revalidation"). `useLoaderData` returns new values and causes the components to update!
 
 Add a form, add an action, React Router does the rest.
 
@@ -747,7 +721,7 @@ Now try it again:
 
 Our user now has more options than slamming refresh, they can continue to interact with the parts of the page that aren't having trouble 🙌
 
-Because the destroy route has its own _`errorElement`_ and is a child of the root route, the error will render there instead of the root. As you probably noticed, these errors bubble up to the nearest _`errorElement`_. Add as many or as few as you like, as long as you've got one at the root.
+Because the destroy route has its own `errorElement` and is a child of the root route, the error will render there instead of the root. As you probably noticed, these errors bubble up to the nearest `errorElement`. Add as many or as few as you like, as long as you've got one at the root.
 
 👉 Remember to remove the error we added for kicks
 
@@ -775,7 +749,7 @@ When we load up the app, you'll notice a big blank page on the right side of our
   src="https://reactrouter.com/_docs/tutorial/19.webp"
 />
 
-When a route has children, and you're at the parent route's path, the _`<Outlet>`_ has nothing to render because no children match. You can think of index routes as the default child route to fill in that space.
+When a route has children, and you're at the parent route's path, the `<Outlet>` has nothing to render because no children match. You can think of index routes as the default child route to fill in that space.
 
 👉 **Create the index route module, and fill in the index component's elements**
 
@@ -829,7 +803,7 @@ Two more features to go. We're on the home stretch!
 
 All of our interactive UI so far have been either links that change the URL or forms that post data to actions. The search field is interesting because it's a mix of both: it's a form but it only changes the URL, it doesn't change data.
 
-Right now it's just a normal HTML _`<form>`_, not a React Router _`<Form>`_. Let's see what the browser does with it by default:
+Right now it's just a normal HTML `<form>`, not a React Router `<Form>`. Let's see what the browser does with it by default:
 
 👉 **Type a name into the search field and hit the enter key**
 
@@ -855,9 +829,9 @@ If we review the search form, it looks like this:
 </form>
 ```
 
-As we've seen before, browsers can serialize forms by the _`name`_ attribute of it's input elements. The name of this input is _`q`_, that's why the URL has _`?q=`_. If we named it `search` the URL would be _`?search=`_.
+As we've seen before, browsers can serialize forms by the `name` attribute of it's input elements. The name of this input is `q`, that's why the URL has `?q=`. If we named it `search` the URL would be `?search=`.
 
-Note that this form is different from the others we've used, it does not have _`<form method="post">`_. The default _`method`_ is _`"get"`_. That means when the browser creates the request for the next document, it doesn't put the form data into the request POST body, but into the [`URLSearchParams`][urlsearchparams] of a GET request.
+Note that this form is different from the others we've used, it does not have `<form method="post">`. The default `method` is `"get"`. That means when the browser creates the request for the next document, it doesn't put the form data into the request POST body, but into the [`URLSearchParams`][urlsearchparams] of a GET request.
 
 ---
 
@@ -865,7 +839,7 @@ Note that this form is different from the others we've used, it does not have _`
 
 Let's use client side routing to submit this form and filter the list in our existing loader.
 
-👉 **Change _`<form>`_ to _`<Form>`_**
+👉 **Change `<form>` to `<Form>`**
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.11.jsx
@@ -900,7 +874,7 @@ There are a couple of UX issues here that we can take care of quickly.
 
 In other words, the URL and our form state are out of sync.
 
-👉 **Return _`q`_ from your loader and set it as the search field default value**
+👉 **Return `q` from your loader and set it as the search field default value**
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.13.jsx
@@ -991,7 +965,7 @@ export default function Root() {
 
 We've got a product decision to make here. For this UI, we'd probably rather have the filtering happen on every key stroke instead of when the form is explicitly submitted.
 
-We've seen _`useNavigate`_ already, we'll use its cousin, [`useSubmit`][usesubmit], for this.
+We've seen `useNavigate` already, we'll use its cousin, [`useSubmit`][usesubmit], for this.
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.15.jsx
@@ -1393,41 +1367,44 @@ const router = createBrowserRouter(
 
 That's it! Thanks for giving React Router a shot. We hope this tutorial gives you a solid start to build great user experiences. There's a lot more you can do with React Router, so make sure to check out all the APIs 😀
 
+[reactroutertutorial]: https://reactrouter.com/en/main/start/tutorial
+[codehike]: https://codehike.org/
+[reactroutertutorialapp]: https://react-router-tutorial.github.io
 [vite]: https://vitejs.dev/guide/
 [node]: https://nodejs.org
-[createbrowserrouter]: ../routers/create-browser-router
-[route]: ../route/route
+[createbrowserrouter]: https://reactrouter.com/en/main/routers/create-browser-router
+[route]: https://reactrouter.com/en/main/route/route
 [tutorial-css]: https://gist.githubusercontent.com/ryanflorence/ba20d473ef59e1965543fa013ae4163f/raw/499707f25a5690d490c7b3d54c65c65eb895930c/react-router-6.4-tutorial-css.css
 [tutorial-data]: https://gist.githubusercontent.com/ryanflorence/1e7f5d3344c0db4a8394292c157cd305/raw/f7ff21e9ae7ffd55bfaaaf320e09c6a08a8a6611/contacts.js
-[routeelement]: ../route/route#element
+[routeelement]: https://reactrouter.com/en/main/route/route#element
 [jim]: https://blog.jim-nielsen.com/
-[errorelement]: ../route/error-element
-[userouteerror]: ../hooks/use-route-error
-[isrouteerrorresponse]: ../utils/is-route-error-response
-[outlet]: ../components/outlet
-[link]: ../components/link
+[errorelement]: https://reactrouter.com/en/main/route/error-element
+[userouteerror]: https://reactrouter.com/en/main/hooks/use-route-error
+[isrouteerrorresponse]: https://reactrouter.com/en/main/utils/is-route-error-response
+[outlet]: https://reactrouter.com/en/main/components/outlet
+[link]: https://reactrouter.com/en/main/components/link
 [setup]: #setup
-[loader]: ../route/loader
-[useloaderdata]: ../hooks/use-loader-data
-[action]: ../route/action
-[params]: ../route/loader#params
-[form]: ../components/form
+[loader]: https://reactrouter.com/en/main/route/loader
+[useloaderdata]: https://reactrouter.com/en/main/hooks/use-loader-data
+[action]: https://reactrouter.com/en/main/route/action
+[params]: https://reactrouter.com/en/main/route/loader#params
+[form]: https://reactrouter.com/en/main/components/form
 [request]: https://developer.mozilla.org/en-US/docs/Web/API/Request
 [formdata]: https://developer.mozilla.org/en-US/docs/Web/API/FormData
 [fromentries]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
 [requestformdata]: https://developer.mozilla.org/en-US/docs/Web/API/Request/formData
 [response]: https://developer.mozilla.org/en-US/docs/Web/API/Response
-[redirect]: ../fetch/redirect
-[returningresponses]: ../route/loader#returning-responses
-[usenavigation]: ../hooks/use-navigation
-[index]: ../route/route#index
-[path]: ../route/route#path
-[usenavigate]: ../hooks/use-navigate
-[uselocation]: ../hooks/use-location
+[redirect]: https://reactrouter.com/en/main/fetch/redirect
+[returningresponses]: https://reactrouter.com/en/main/route/loader#returning-responses
+[usenavigation]: https://reactrouter.com/en/main/hooks/use-navigation
+[index]: https://reactrouter.com/en/main/route/route#index
+[path]: https://reactrouter.com/en/main/route/route#path
+[usenavigate]: https://reactrouter.com/en/main/hooks/use-navigate
+[uselocation]: https://reactrouter.com/en/main/hooks/use-location
 [urlsearchparams]: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-[usesubmit]: ../hooks/use-submit
-[navlink]: ../components/nav-link
-[usefetcher]: ../hooks/use-fetcher
-[fetcherstate]: ../hooks/use-fetcher#fetcherstate
+[usesubmit]: https://reactrouter.com/en/main/hooks/use-submit
+[navlink]: https://reactrouter.com/en/main/components/nav-link
+[usefetcher]: https://reactrouter.com/en/main/hooks/use-fetcher
+[fetcherstate]: https://reactrouter.com/en/main/hooks/use-fetcher#fetcherstate
 
 </CH.Scrollycoding>

@@ -1,16 +1,16 @@
 @import '@unocss/reset/tailwind.css';
 @unocss all;
 
-#intro {
-  @apply md:w-xs lg:w-md xl:w-xl relative left-1/2 p-15 pt-[30vh];
+#foreword {
+  @apply md:w-xs lg:w-md xl:w-xl relative left-1/2 ml-15 mr-10 text-brand-1;
 }
 
 h1 {
-  @apply text-4xl font-montserrat font-900 pb-5 pt-10;
+  @apply text-4xl font-montserrat font-900 py-5;
 }
 
 h2 {
-  @apply text-3xl font-montserrat font-700 pb-5 pt-8;
+  @apply text-3xl font-montserrat font-700 py-5;
 }
 
 p {
@@ -19,6 +19,18 @@ p {
 
 a {
   @apply cursor-pointer underline underline-dashed;
+}
+
+code {
+  @apply bg-brand-2 brightness-90 rounded p-1 text-sm;
+}
+
+docs-info {
+  @apply brightness-90 bg-brand-2 p-1;
+}
+
+small p {
+  @apply text-sm;
 }
 
 .ch-scrollycoding {
