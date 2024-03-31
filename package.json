@@ -28,6 +28,7 @@
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.1.64",
     "@unocss/postcss": "^0.58.8",
     "@unocss/transformer-directives": "^0.58.8",
     "@vitejs/plugin-react": "^4.2.1",

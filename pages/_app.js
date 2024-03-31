@@ -2,6 +2,7 @@ import '@code-hike/mdx/dist/index.css'
 import App from 'next/app'
 import '../global.css'
 import Dropdown from './components/Dropdown'
+import Social from './components/Social'
 import { THEME } from './common/constants'
 
 export default function MyApp({
@@ -20,6 +21,9 @@ export default function MyApp({
     >
       <div className="min-h-screen md:bg-gradient-to-r from-brand-1 from-50% to-brand-2 to-50%">
         <Dropdown className="fixed top-5 right-5 md:right-1/2 md:translate-x-1/2" />
+        <div className="absolute w-[50vw] pt-[30vh] flex justify-end px-20 text-brand-2">
+          <Social />
+        </div>
         <Component {...pageProps} />
       </div>
     </div>

@@ -1,6 +1,10 @@
 @import '@unocss/reset/tailwind.css';
 @unocss all;
 
+#intro {
+  @apply md:w-xs lg:w-md xl:w-xl relative left-1/2 p-15 pt-[30vh];
+}
+
 h1 {
   @apply text-4xl font-montserrat font-900 pb-5 pt-10;
 }
@@ -18,15 +22,14 @@ a {
 }
 
 .ch-scrollycoding {
+  /* --ch-scrollycoding-sticker-width: 420px; */
   @apply max-w-screen-xl flex-row-reverse mx-auto my-0 gap-0;
 
   .ch-scrollycoding-content {
     @apply flex-1 text-brand-1 p-10 bg-brand-2;
 
     .ch-scrollycoding-step-content {
-      @apply px-5 max-w-lg min-w-0;
-      /* @apply w-full */
-      /* @apply border-none; */
+      @apply px-5 box-border md:w-xs lg:w-md xl:w-xl;
 
       .ch-codeblock,
       .ch-codegroup,
@@ -49,6 +52,7 @@ a {
   .ch-scrollycoding-sticker {
     @apply flex-1 max-h-unset h-screen top-0 py-5 px-10 bg-brand-1;
 
+    .ch-codeblock,
     .ch-codegroup {
       --ch-t-colorScheme: dark;
       --ch-t-foreground: #a6accd;
@@ -81,23 +85,14 @@ a {
       --ch-t-list-activeSelectionForeground: #e4f0fb;
       --ch-t-list-hoverBackground: #30334080;
       --ch-t-list-hoverForeground: #e4f0fb;
+    }
+
+    .ch-codegroup {
       @apply max-h-unset h-screen;
     }
 
-    .ch-codeblock {
-      --ch-t-background: var(--brand-1);
-      --ch-t-tab-activeBackground: var(--brand-1);
-      --ch-t-tab-inactiveBackground: var(--brand-1);
-      --ch-t-tab-activeBorder: #ffffff1f;
-      --ch-t-editorGroupHeader-tabsBackground: var(
-        --brand-1
-      );
-      --ch-t-lighter-inlineBackground: var(--brand-1);
-    }
-
     .ch-expand-dialog-content {
-      @apply border-4;
-      border-color: var(--brand-2);
+      @apply border-4 border-brand-2;
 
       .ch-code-browser-sidebar {
         @apply bg-brand-2;
