@@ -33,6 +33,10 @@ small p {
   @apply text-sm;
 }
 
+ol {
+  @apply list-decimal pl-4;
+}
+
 .ch-scrollycoding {
   /* --ch-scrollycoding-sticker-width: 420px; */
   @apply max-w-screen-xl flex-row-reverse mx-auto my-0 gap-0;

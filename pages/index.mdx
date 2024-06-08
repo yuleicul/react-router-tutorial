@@ -52,9 +52,7 @@ We've got some pre-written CSS for this tutorial so we can stay focused on React
 👉 **Copy/Paste the tutorial CSS into `src/index.css`**
 
 ```css src/index.css
-/* 
 // from ../src/index.css
- */
 ```
 
 ---
@@ -102,7 +100,7 @@ This first route is what we often call the "root route" since the rest of our ro
 
 Let's add the global layout for this app.
 
-👉 **Create `src/routes/root.jsx`** and create the root layout component\*\*
+👉 **Create `src/routes/root.jsx` and create the root layout component**
 
 ```jsx src/routes/root.jsx
 // from ../src/routes/root.01.jsx
@@ -975,6 +973,8 @@ Now as you type, the form is submitted automatically!
 
 Note the argument to [`submit`][usesubmit]. We're passing in `event.currentTarget.form`. The `currentTarget` is the DOM node the event is attached to, and the `currentTarget.form` is the input's parent form node. **The `submit` function will serialize and submit any form you pass to it.**
 
+---
+
 ## Adding Search Spinner
 
 In a production app, it's likely this search will be looking for records in a database that is too large to send all at once and filter client side. That's why this demo has some faked network latency.
@@ -983,48 +983,8 @@ Without any loading indicator, the search feels kinda sluggish. Even if we could
 
 👉 **Add the search spinner**
 
-```jsx src/routes/root.jsx lines=[8-12,26,32]
-// existing code
-
-export default function Root() {
-  const { contacts, q } = useLoaderData()
-  const navigation = useNavigation()
-  const submit = useSubmit()
-
-  const searching =
-    navigation.location &&
-    new URLSearchParams(navigation.location.search).has('q')
-
-  useEffect(() => {
-    document.getElementById('q').value = q
-  }, [q])
-
-  return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-        <div>
-          <Form id="search-form" role="search">
-            <input
-              id="q"
-              className={searching ? 'loading' : ''}
-              // existing code
-            />
-            <div
-              id="search-spinner"
-              aria-hidden
-              hidden={!searching}
-            />
-            {/* existing code */}
-          </Form>
-          {/* existing code */}
-        </div>
-        {/* existing code */}
-      </div>
-      {/* existing code */}
-    </>
-  )
-}
+```jsx src/routes/root.jsx
+// from ../src/routes/root.16.jsx
 ```
 
 <img
@@ -1034,6 +994,8 @@ export default function Root() {
 />
 
 The `navigation.location` will show up when the app is navigating to a new URL and loading the data for it. It then goes away when there is no pending navigation anymore.
+
+---
 
 ## Managing the History Stack
 
@@ -1049,43 +1011,15 @@ We can avoid this by _replacing_ the current entry in the history stack with the
 
 👉 **Use `replace` in `submit`**
 
-```jsx src/routes/root.jsx lines=[16-19]
-// existing code
-
-export default function Root() {
-  // existing code
-
-  return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-        <div>
-          <Form id="search-form" role="search">
-            <input
-              id="q"
-              // existing code
-              onChange={(event) => {
-                const isFirstSearch = q == null
-                submit(event.currentTarget.form, {
-                  replace: !isFirstSearch,
-                })
-              }}
-            />
-            {/* existing code */}
-          </Form>
-          {/* existing code */}
-        </div>
-        {/* existing code */}
-      </div>
-      {/* existing code */}
-    </>
-  )
-}
+```jsx src/routes/root.jsx
+// from ../src/routes/root.17.jsx
 ```
 
 We only want to replace search results, not the page before we started searching, so we do a quick check if this is the first search or not and then decide to replace.
 
 Each key stroke no longer creates new entries, so the user can click back out of the search results without having to click it 7 times 😅.
+
+---
 
 ## Mutations Without Navigation
 
@@ -1097,87 +1031,28 @@ The ★ button on the contact page makes sense for this. We aren't creating or d
 
 👉 **Change the `<Favorite>` form to a fetcher form**
 
-```jsx src/routes/contact.jsx lines=[4,10,14,26]
-import {
-  useLoaderData,
-  Form,
-  useFetcher,
-} from 'react-router-dom'
-
-// existing code
-
-function Favorite({ contact }) {
-  const fetcher = useFetcher()
-  let favorite = contact.favorite
-
-  return (
-    <fetcher.Form method="post">
-      <button
-        name="favorite"
-        value={favorite ? 'false' : 'true'}
-        aria-label={
-          favorite
-            ? 'Remove from favorites'
-            : 'Add to favorites'
-        }
-      >
-        {favorite ? '★' : '☆'}
-      </button>
-    </fetcher.Form>
-  )
-}
+```jsx src/routes/contact.jsx
+// from ../src/routes/contact.03.jsx
 ```
 
 Might want to take a look at that form while we're here. As always, our form has fields with a `name` prop. This form will send [`formData`][formdata] with a `favorite` key that's either `"true" | "false"`. Since it's got `method="post"` it will call the action. Since there is no `<fetcher.Form action="...">` prop, it will post to the route where the form is rendered.
 
+---
+
 👉 **Create the action**
 
-```jsx src/routes/contact.jsx lines=[2,4-9]
-// existing code
-import { getContact, updateContact } from '../contacts'
-
-export async function action({ request, params }) {
-  let formData = await request.formData()
-  return updateContact(params.contactId, {
-    favorite: formData.get('favorite') === 'true',
-  })
-}
-
-export default function Contact() {
-  // existing code
-}
+```jsx src/routes/contact.jsx
+// from ../src/routes/contact.04.jsx
 ```
 
 Pretty simple. Pull the form data off the request and send it to the data model.
 
+---
+
 👉 **Configure the route's new action**
 
-```jsx src/main.jsx lines=[4,20]
-// existing code
-import Contact, {
-  loader as contactLoader,
-  action as contactAction,
-} from './routes/contact'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
-    children: [
-      { index: true, element: <Index /> },
-      {
-        path: 'contacts/:contactId',
-        element: <Contact />,
-        loader: contactLoader,
-        action: contactAction,
-      },
-      /* existing code */
-    ],
-  },
-])
+```jsx src/main.jsx
+// from ../src/main.14.jsx
 ```
 
 Alright, we're ready to click the star next to the user's name!
@@ -1192,6 +1067,8 @@ Check that out, both stars automatically update. Our new `<fetcher.Form method="
 
 There is one key difference though, it's not a navigation--the URL doesn't change, the history stack is unaffected.
 
+---
+
 ## Optimistic UI
 
 You probably noticed the app felt kind of unresponsive when we clicked the favorite button from the last section. Once again, we added some network latency because you're going to have it in the real world!
@@ -1202,36 +1079,13 @@ The fetcher knows the form data being submitted to the action, so it's available
 
 👉 **Read the optimistic value from `fetcher.formData`**
 
-```jsx src/routes/contact.jsx lines=[7-9]
-// existing code
-
-function Favorite({ contact }) {
-  const fetcher = useFetcher()
-
-  let favorite = contact.favorite
-  if (fetcher.formData) {
-    favorite = fetcher.formData.get('favorite') === 'true'
-  }
-
-  return (
-    <fetcher.Form method="post">
-      <button
-        name="favorite"
-        value={favorite ? 'false' : 'true'}
-        aria-label={
-          favorite
-            ? 'Remove from favorites'
-            : 'Add to favorites'
-        }
-      >
-        {favorite ? '★' : '☆'}
-      </button>
-    </fetcher.Form>
-  )
-}
+```jsx src/routes/contact.jsx
+// from ../src/routes/contact.05.jsx
 ```
 
 If you click the button now you should see the star _immediately_ change to the new state. Instead of always rendering the actual data, we check if the fetcher has any `formData` being submitted, if so, we'll use that instead. When the action is done, the `fetcher.formData` will no longer exist and we're back to using the actual data. So even if you write bugs in your optimistic UI code, it'll eventually go back to the correct state 🥹
+
+---
 
 ## Not Found Data
 
@@ -1249,17 +1103,8 @@ Whenever you have an expected error case in a loader or action–like the data n
 
 👉 **Throw a 404 response in the loader**
 
-```jsx src/routes/contact.jsx lines=[2-9]
-export async function loader({ params }) {
-  const contact = await getContact(params.contactId)
-  if (!contact) {
-    throw new Response('', {
-      status: 404,
-      statusText: 'Not Found',
-    })
-  }
-  return { contact }
-}
+```jsx src/routes/contact.jsx
+// from ../src/routes/contact.06.jsx
 ```
 
 <img
@@ -1271,6 +1116,8 @@ export async function loader({ params }) {
 Instead of hitting a render error with `Cannot read properties of null`, we avoid the component completely and render the error path instead, telling the user something more specific.
 
 This keeps your happy paths, happy. Your route elements don't need to concern themselves with error and loading states.
+
+---
 
 ## Pathless Routes
 
@@ -1290,31 +1137,8 @@ There's a cleaner way. Routes can be used _without_ a path, which lets them part
 
 👉 **Wrap the child routes in a pathless route**
 
-```jsx src/main.jsx lines=[9-21]
-createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    loader: rootLoader,
-    action: rootAction,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        errorElement: <ErrorPage />,
-        children: [
-          { index: true, element: <Index /> },
-          {
-            path: 'contacts/:contactId',
-            element: <Contact />,
-            loader: contactLoader,
-            action: contactAction,
-          },
-          /* the rest of the routes */
-        ],
-      },
-    ],
-  },
-])
+```jsx src/main.jsx
+// from ../src/main.15.jsx
 ```
 
 When any errors are thrown in the child routes, our new pathless route will catch it and render, preserving the root route's UI!

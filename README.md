@@ -5,4 +5,4 @@ An alternative take on [React Router's official tutorial](https://reactrouter.co
 Todo:
 
 - [ ] add implemented application link
-- [ ] remove the comments for importing css (line55)
+- [ ] Heading anchors. https://www.npmjs.com/package/rehype-slug

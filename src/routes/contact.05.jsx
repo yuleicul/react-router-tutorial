@@ -1,4 +1,4 @@
-// focus(10:15)
+// focus(84,86:88)
 import {
   Form,
   useLoaderData,
@@ -8,12 +8,6 @@ import { getContact, updateContact } from '../contacts'
 
 export async function loader({ params }) {
   const contact = await getContact(params.contactId)
-  if (!contact) {
-    throw new Response('', {
-      status: 404,
-      statusText: 'Not Found',
-    })
-  }
   return { contact }
 }
 

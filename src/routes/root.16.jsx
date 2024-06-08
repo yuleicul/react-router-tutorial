@@ -1,4 +1,4 @@
-// focus(53:56)
+// focus(30:32,46,59)
 import {
   Outlet,
   NavLink,
@@ -51,10 +51,7 @@ export default function Root() {
               name="q"
               defaultValue={q}
               onChange={(event) => {
-                const isFirstSearch = q == null
-                submit(event.currentTarget.form, {
-                  replace: !isFirstSearch,
-                })
+                submit(event.currentTarget.form)
               }}
             />
             <div
