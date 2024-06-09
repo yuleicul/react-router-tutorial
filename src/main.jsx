@@ -23,7 +23,8 @@ import Index from './routes/index'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    // Fix route 404 in the github page
+    path: import.meta.env.BASE_URL,
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
