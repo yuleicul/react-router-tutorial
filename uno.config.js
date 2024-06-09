@@ -5,7 +5,7 @@ import {
   presetWebFonts,
   presetTypography,
 } from 'unocss'
-import { THEME } from './pages/common/constants'
+import { THEME } from './pages/lib/constants'
 import transformerDirectives from '@unocss/transformer-directives'
 
 export default defineConfig({

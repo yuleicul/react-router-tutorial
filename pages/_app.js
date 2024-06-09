@@ -3,7 +3,7 @@ import App from 'next/app'
 import '../global.css'
 import Dropdown from './components/Dropdown'
 import Social from './components/Social'
-import { THEME } from './common/constants'
+import { THEME } from './lib/constants'
 
 export default function MyApp({
   Component,
