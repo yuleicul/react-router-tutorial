@@ -13,7 +13,11 @@ import { useEffect } from 'react'
 
 export async function action() {
   const contact = await createContact()
-  return redirect(`/contacts/${contact.id}/edit`)
+  return redirect(
+    `${import.meta.env.BASE_URL}/contacts/${
+      contact.id
+    }/edit`
+  )
 }
 
 export async function loader({ request }) {

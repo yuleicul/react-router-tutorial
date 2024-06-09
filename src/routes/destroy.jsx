@@ -3,5 +3,5 @@ import { deleteContact } from '../contacts'
 
 export async function action({ params }) {
   await deleteContact(params.contactId)
-  return redirect('/')
+  return redirect(import.meta.env.BASE_URL)
 }
