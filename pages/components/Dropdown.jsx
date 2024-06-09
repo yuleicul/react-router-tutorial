@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import BicolorCircle from './BicolorCircle'
-import { THEME } from '../common/constants'
-import { setTheme } from '../common/utils'
+import { THEME } from '../lib/constants'
+import { setTheme } from '../lib/utils'
 
 function Dropdown({ className = '' }) {
   const [dropdownVisible, setDropdownVisible] =
