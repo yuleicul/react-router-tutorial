@@ -1,9 +1,9 @@
 import '@code-hike/mdx/dist/index.css'
 import App from 'next/app'
 import '../global.css'
-import Dropdown from './components/Dropdown'
-import Social from './components/Social'
-import { THEME } from './lib/constants'
+import Dropdown from '../components/Dropdown'
+import Social from '../components/Social'
+import { THEME } from '../lib/constants'
 
 export default function MyApp({
   Component,
